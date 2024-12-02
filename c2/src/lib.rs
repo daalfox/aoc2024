@@ -8,3 +8,10 @@ pub fn parse_input(input: String) -> Vec<Vec<usize>> {
         })
         .collect()
 }
+pub fn is_safe(report: &[usize]) -> bool {
+    if !report.is_sorted_by(|a, b| a < b) && !report.is_sorted_by(|a, b| a > b) {
+        return false;
+    }
+
+    report.is_sorted_by(|a, b| a.abs_diff(*b) <= 3)
+}

@@ -1,6 +1,6 @@
 use std::{env, fs};
 
-use c2::parse_input;
+use c2::{is_safe, parse_input};
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -8,17 +8,10 @@ fn main() {
 
     let reports: Vec<Vec<usize>> = parse_input(input);
 
-    let result = reports.into_iter().fold(0, |acc, report| {
-        if !report.is_sorted_by(|a, b| a < b) && !report.is_sorted_by(|a, b| a > b) {
-            return acc;
-        }
-
-        if report.is_sorted_by(|a, b| a.abs_diff(*b) <= 3) {
-            acc + 1
-        } else {
-            acc
-        }
-    });
+    let result = reports.into_iter().fold(
+        0,
+        |acc, report| if is_safe(&report) { acc + 1 } else { acc },
+    );
 
     println!("{}", result);
 }
