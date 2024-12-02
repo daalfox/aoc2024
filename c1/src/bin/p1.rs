@@ -9,19 +9,14 @@ fn main() {
 
     let (mut left, mut right): (Vec<usize>, Vec<usize>) = parse_input(input);
 
-    let mut distances: Vec<usize> = vec![];
-
     left.sort();
     right.sort();
     right.reverse();
 
-    for x in left.into_iter() {
-        if let Some(y) = right.pop() {
-            distances.push(x.abs_diff(y));
-        }
-    }
+    let result = left.into_iter().fold(0, |acc, x| {
+        let y = right.pop().unwrap();
+        acc + x.abs_diff(y)
+    });
 
-    let result = distances.into_iter().reduce(|acc, n| acc + n);
-
-    println!("{}", result.unwrap());
+    println!("{}", result);
 }
