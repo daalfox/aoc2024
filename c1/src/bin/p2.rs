@@ -9,17 +9,11 @@ fn main() {
 
     let (left, right): (Vec<usize>, Vec<usize>) = parse_input(input);
 
-    let mut score: Vec<usize> = vec![];
-
-    for x in left.into_iter() {
-        score.push(
-            right
-                .iter()
-                .fold(0, |acc, &y| if y == x { acc + y } else { acc }),
-        )
-    }
-
-    let result: usize = score.into_iter().sum();
+    let result = left.into_iter().fold(0, |acc, x| {
+        acc + right
+            .iter()
+            .fold(0, |acc, &y| if y == x { acc + y } else { acc })
+    });
 
     println!("{}", result);
 }
